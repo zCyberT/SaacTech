@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isaac's Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            overflow-x: hidden;
+        }
+
+        .dashboard {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 1.2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dashboard.scrolled {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            padding: 0.8rem 3rem;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            transition: all 0.4s ease;
+        }
+
+        .dashboard.scrolled .profile-section {
+            transform: scale(0.95);
+        }
+
+        .profile-image {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+            border: 3px solid white;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .profile-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .dashboard.scrolled .profile-image {
+            width: 45px;
+            height: 45px;
+            font-size: 1.3rem;
+        }
+
+        .profile-info h1 {
+            font-size: 1.3rem;
+            color: #1e293b;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .dashboard.scrolled .profile-info h1 {
+            font-size: 1.1rem;
+        }
+
+        .profile-info p {
+            font-size: 0.9rem;
+            color: #64748b;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .dashboard.scrolled .profile-info p {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 0.5rem;
+            list-style: none;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 0.6rem 1rem;
+            border-radius: 50px;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dashboard.scrolled .nav-menu {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(59, 130, 246, 0.15);
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.1);
+        }
+
+        .nav-menu li {
+            position: relative;
+        }
+
+        .nav-menu a {
+            color: #475569;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.6rem 1.2rem;
+            display: block;
+            border-radius: 30px;
+            z-index: 1;
+        }
+
+        .nav-menu a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border-radius: 30px;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: -1;
+        }
+
+        .nav-menu a:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .nav-menu a:hover::before {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .nav-menu a.active {
+            color: white;
+        }
+
+        .nav-menu a.active::before {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .main-content {
+            margin-top: 90px;
+            padding: 3rem 5%;
+        }
+
+        .hero-section {
+            max-width: 1400px;
+            margin: 0 auto 4rem;
+            padding: 4rem 3rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(37, 99, 235, 0.08) 100%);
+            clip-path: polygon(30% 0, 100% 0, 100% 100%, 0% 100%);
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+
+        .hero-content h2 {
+            font-size: 3rem;
+            color: #1e293b;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.5rem;
+            color: #3b82f6;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #64748b;
+            margin-bottom: 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.9rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #3b82f6;
+            border: 2px solid #3b82f6;
+        }
+
+        .btn-secondary:hover {
+            background: #eff6ff;
+            transform: translateY(-2px);
+        }
+
+        .content-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            gap: 2rem;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .section-card.visible {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .section-card:hover {
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: #1e293b;
+            margin-bottom: 2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 30px;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border-radius: 2px;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: #64748b;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 4px solid #3b82f6;
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateX(5px);
+            border-left-color: #2563eb;
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.1);
+        }
+
+        .skill-category h3 {
+            font-size: 1.3rem;
+            color: #1e293b;
+            margin-bottom: 1.2rem;
+            font-weight: 700;
+        }
+
+        .skill-category ul {
+            list-style: none;
+        }
+
+        .skill-category li {
+            padding: 0.6rem 0;
+            color: #64748b;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .skill-category li:hover {
+            color: #3b82f6;
+            transform: translateX(5px);
+        }
+
+        .skill-category li::before {
+            content: '✓';
+            color: #3b82f6;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-item {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 2.5rem;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .project-item:hover {
+            background: white;
+            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.15);
+            border-color: #3b82f6;
+            transform: translateY(-5px);
+        }
+
+        .project-item h3 {
+            font-size: 1.4rem;
+            color: #1e293b;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .project-item p {
+            color: #64748b;
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        .contact-section {
+            text-align: center;
+        }
+
+        .contact-section p {
+            font-size: 1.1rem;
+            color: #64748b;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .social-links a {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #3b82f6;
+            text-decoration: none;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+            font-weight: 700;
+        }
+
+        .social-links a:hover {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
+        }
+
+.social-links a:nth-child(2) {
+    background: white !important;
+    color: #25D366 !important;
+    border: 2px solid #25D366 !important;
+}
+
+.social-links a:nth-child(2):hover {
+    background: linear-gradient(135deg, #25D366 0%, #20bd5c 100%) !important;
+    color: white !important;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3) !important;
+}
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 968px) {
+            .dashboard {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-menu {
+                gap: 0.3rem;
+                padding: 0.5rem 0.8rem;
+            }
+
+            .nav-menu a {
+                font-size: 0.85rem;
+                padding: 0.5rem 1rem;
+            }
+
+            .hero-content h2 {
+                font-size: 2.2rem;
+            }
+
+            .hero-content .subtitle {
+                font-size: 1.3rem;
+            }
+
+            .main-content {
+                padding: 2rem 3%;
+            }
+
+            .section-card {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .dashboard {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .nav-menu {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .nav-menu a {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .profile-info h1 {
+                font-size: 1.1rem;
+            }
+
+            .hero-content h2 {
+                font-size: 1.8rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="dashboard">
+        <div class="profile-section">
+            <div class="profile-image">
+                <img src="1763123541070.jpg" alt="Myself, and I">
+            </div>
+            <div class="profile-info">
+                <h1>Isaac Njwau</h1>
+                <p>Computer Systems Engineer</p>
+            </div>
+        </div>
+        <nav>
+            <ul class="nav-menu">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <section id="home" class="hero-section">
+            <div class="hero-content">
+                <h2>Ready to build Intelligent Systems for Tomorrow</h2>
+                <p class="subtitle">Computer Science • Computer Systems Engineering</p>
+                <p>
+                    With a comprehensive background in Computer Science and stream-majored in Computer Systems Engineering, I design and implement sophisticated computing solutions that seamlessly integrate hardware and software. My focus is on creating robust, scalable, and efficient systems that solve real-world challenges.
+                </p>
+                <div class="cta-buttons">
+                    <a href="#contact" class="btn btn-primary">Let's Connect</a>
+                    <a href="#projects" class="btn btn-secondary">View Projects</a>
+                </div>
+            </div>
+        </section>
+
+        <div class="content-grid">
+            <section id="about" class="section-card">
+                <h2 class="section-title">About Me</h2>
+                <p class="about-text">
+                    My name is Isaac, I studied Computer Science at The UNIVERSITY OF ZAMBIA, majored in Computer Systems Engineering. Throughout my academic journey and professional experience, I've developed a deep understanding of system architectures, embedded systems, network infrastructure, performance optimization and hardware design and implementation. I'm passionate about leveraging technology to create innovative solutions that make a meaningful impact. My approach combines theoretical knowledge with practical implementation, ensuring that every system I design is both elegant and effective.
+                </p>
+            </section>
+
+            <section id="skills" class="section-card">
+                <h2 class="section-title">Technical Expertise</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3>Systems Architecture</h3>
+                        <ul>
+                            <li>Computer Architecture</li>
+                            <li>Operating Systems</li>
+                            <li>Distributed Systems</li>
+                            <li>Embedded Sytems</li>
+                            <li>System Performance Optimization</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Programming Languages</h3>
+                        <ul>
+                            <li>C/C++ Development</li>
+                            <li>Python Programming</li>
+                            <li>Java </li>
+                            <li>Able to adapt to any depending with the problem statement</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Embedded Systems</h3>
+                        <ul>
+                            <li>Microcontroller Programming</li>
+                            <li>Arduino Development Boards</li>
+                            <li>ESP32 Development Boards</li>
+                            <li>IoT Systems Development</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Networking & Infrastructure</h3>
+                        <ul>
+                            <li>Network Protocols</li>
+                            <li>Cybersecurity</li>
+                            <li>Cloud and High performance Computing</li>
+                            <li>System Administration</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="projects" class="section-card">
+                <h2 class="section-title">Featured Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-item">
+                        <h3>High-Performance Computing Cluster</h3>
+                        <p>Designed and deployed a Beowulf High Peformance Cluster optimized for parallel processing tasks. Implemented advanced load balancing algorithms and achieved 40% performance improvement over baseline configuration.</p>
+                    </div>
+                    <div class="project-item">
+                        <h3>Real-Time Embedded Controller</h3>
+                        <p>Developed a sophisticated real-time control system for Smart Home Automation System using arduino uno/mega and ESP32 microcontrollers.</p>
+                    </div>
+                    <div class="project-item">
+                        <h3>Network Traffic Analyzer</h3>
+                        <p>Built a comprehensive network monitoring and analysis platform capable of processing high-volume traffic in real-time. Features include deep packet inspection, anomaly detection, and intuitive data visualization.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact" class="section-card contact-section">
+                <h2 class="section-title">Let's Connect</h2>
+                <p>
+                    I'm always open to discussing new opportunities, innovative projects, and collaborations in Computer Science. Whether you have a question or just want to connect, feel free to reach out.
+                </p>
+                <a href="mailto:isaac.njwau@cs.unza.zm" target="_blank" class="btn btn-primary">Send Message</a>
+                <div class="social-links">
+                     <a href="https://facebook.com/www.isaac.co.zm" target="_blank" class="social-link">
+                    <div class="icon-container facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </div>
+                    <span class="social-name"> </span>
+                </a>
+                    <a href="https://wa.me/+260770480069" target="_blank" class="social-link">
+                    <div class="icon-container whatsapp">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <span class="social-name"> </span>
+                </a>
+                     <a href="https://linkedin.com/in/isaac-njwau" target="_blank" class="social-link">
+                    <div class="icon-container linkedin">
+                        <i class="fab fa-linkedin-in"></i>
+                    </div>
+                    <span class="social-name"> </span>
+                </a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 Isaac TECH • Computer Scientist • Computer Systems Engineer • Designed with excellence</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 100;
+                    const targetPosition = target.offsetTop - offset;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+
+                    // Update active state
+                    document.querySelectorAll('.nav-menu a').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // Scroll effects
+        let lastScroll = 0;
+        window.addEventListener('scroll', function() {
+            const dashboard = document.querySelector('.dashboard');
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll > 50) {
+                dashboard.classList.add('scrolled');
+            } else {
+                dashboard.classList.remove('scrolled');
+            }
+
+            // Update active nav item based on scroll position
+            const sections = document.querySelectorAll('section[id]');
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+                
+                if (currentScroll >= sectionTop && currentScroll < sectionBottom) {
+                    document.querySelectorAll('.nav-menu a').forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+
+            lastScroll = currentScroll;
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

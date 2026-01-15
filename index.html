@@ -379,6 +379,7 @@
         .mobile-nav-links li:nth-child(3) { animation-delay: 0.2s; }
         .mobile-nav-links li:nth-child(4) { animation-delay: 0.25s; }
         .mobile-nav-links li:nth-child(5) { animation-delay: 0.3s; }
+        .mobile-nav-links li:nth-child(6) { animation-delay: 0.35s; }
 
         @keyframes slideInRight {
             from {
@@ -729,6 +730,156 @@
             font-size: 1.1rem;
         }
 
+        /* Simplified Education Section Styles */
+        .education-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .education-card-simple {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 16px;
+            padding: 2.5rem;
+            border: 2px solid rgba(59, 130, 246, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .education-card-simple:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.15);
+            border-color: #3b82f6;
+        }
+
+        .education-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .education-card-simple h3 {
+            font-size: 1.4rem;
+            color: #1e293b;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .education-period {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.1) 100%);
+            color: #3b82f6;
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            margin-bottom: 1rem;
+        }
+
+        .institution {
+            font-size: 1.1rem;
+            color: #64748b;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .degree-type {
+            font-size: 1rem;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        /* Certifications Section */
+        .certifications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .cert-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cert-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.15);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .cert-badge {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .cert-card h3 {
+            font-size: 1.3rem;
+            color: #1e293b;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+        }
+
+        .cert-card .issuer {
+            color: #3b82f6;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .cert-card .date {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cert-card p {
+            color: #64748b;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .cert-card .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 1.5rem;
+        }
+
+        .cert-card .skill-tag {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.1) 100%);
+            color: #3b82f6;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -858,6 +1009,11 @@
             .section-card {
                 padding: 2rem;
             }
+
+            .education-grid,
+            .certifications-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 600px) {
@@ -898,6 +1054,17 @@
             .skills-grid {
                 grid-template-columns: 1fr;
             }
+
+            .education-card-simple,
+            .cert-card {
+                padding: 1.5rem;
+            }
+
+            .education-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
+            }
         }
     </style>
 </head>
@@ -919,6 +1086,7 @@
                     <li><a href="#home" class="active">Home</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#skills">Skills</a></li>
+                    <li><a href="#education">Education</a></li>
                     <li><a href="#projects">Projects</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
@@ -964,6 +1132,12 @@
                     <a href="#skills" class="mobile-nav-link">
                         <span class="mobile-nav-icon"><i class="fas fa-code"></i></span>
                         Skills
+                    </a>
+                </li>
+                <li>
+                    <a href="#education" class="mobile-nav-link">
+                        <span class="mobile-nav-icon"><i class="fas fa-graduation-cap"></i></span>
+                        Education
                     </a>
                 </li>
                 <li>
@@ -1035,8 +1209,14 @@
                         <h3>Programming Languages</h3>
                         <ul>
                             <li>C/C++ Development</li>
-                            <li>Python Programming</li>
+                            <li>Python </li>
+                            <li>Node.JS </li>
+                            <li>JavaScript </li>
                             <li>Java </li>
+                            <li>React.JS </li>
+                            <li>Git </li>
+                            <li>HTML </li>
+                            <li>CSS</li>
                             <li>Able to adapt to any depending with the problem statement</li>
                         </ul>
                     </div>
@@ -1061,6 +1241,71 @@
                 </div>
             </section>
 
+            <section id="education" class="section-card">
+                <h2 class="section-title">Education & Certifications</h2>
+                
+                <!-- Simple Education Grid -->
+                <div class="education-grid">
+                    <!-- University Education -->
+                    <div class="education-card-simple">
+                        <div class="education-icon">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <h3>BSc Computer Science</h3>
+                        <div class="education-period">2022 - 2025</div>
+                        <div class="institution">The University of Zambia</div>
+                        <div class="degree-type">Computer Systems Engineering</div>
+                    </div>
+                    
+                    <!-- High School Education -->
+                    <div class="education-card-simple">
+                        <div class="education-icon">
+                            <i class="fas fa-school"></i>
+                        </div>
+                        <h3>O-Level Certificate</h3>
+                        <div class="education-period">2017 - 2019</div>
+                        <div class="institution">Lilayi Secondary School</div>
+                        <div class="degree-type">Secondary Education</div>
+                    </div>
+                </div>
+                
+                <!-- Certifications Section -->
+                <div class="certifications-grid">
+                    <div class="cert-card">
+                        <div class="cert-badge">
+                            <i class="fab fa-aws"></i>
+                        </div>
+                        <h3>Cloud Computing Foundation</h3>
+                        <div class="issuer">Amazon Web Services (AWS)</div>
+                        <div class="date">Issued 2024</div>
+                        <p>Comprehensive understanding of cloud concepts, AWS services, security, architecture, pricing, and support.</p>
+                        <div class="skills">
+                            <span class="skill-tag">AWS Fundamentals</span>
+                            <span class="skill-tag">Cloud Architecture</span>
+                            <span class="skill-tag">Cloud Security</span>
+                            <span class="skill-tag">Cost Optimization</span>
+                        </div>
+                    </div>
+                    
+                    <!-- University Certification -->
+                    <div class="cert-card">
+                        <div class="cert-badge">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3>Systems Engineering</h3>
+                        <div class="issuer">University of Zambia</div>
+                        <div class="date">2022 - 2025</div>
+                        <p>Specialized track in Computer Systems Engineering covering hardware design, embedded systems, and network infrastructure.</p>
+                        <div class="skills">
+                            <span class="skill-tag">Computer Architecture</span>
+                            <span class="skill-tag">Embedded Systems</span>
+                            <span class="skill-tag">Network Protocols</span>
+                            <span class="skill-tag">System Design</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <section id="projects" class="section-card">
                 <h2 class="section-title">Featured Projects</h2>
                 <div class="projects-grid">
@@ -1070,7 +1315,7 @@
                     </div>
                     <div class="project-item">
                         <h3>Real-Time Embedded Controller</h3>
-                        <p>Developed a sophisticated real-time control system for Smart Home Automation System using arduino uno/mega and ESP32 microcontrollers.</p>
+                        <p>Developed a sophisticated real-time control system for Smart Home Automation using arduino uno/mega and ESP32 microcontrollers.</p>
                     </div>
                     <div class="project-item">
                         <h3>Network Traffic Analyzer</h3>
@@ -1224,6 +1469,3 @@
     </script>
 </body>
 </html>
-
-
-

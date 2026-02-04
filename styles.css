@@ -28,7 +28,7 @@ body {
     border-bottom: 1px solid rgba(59, 130, 246, 0.1);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
+//**
 .dashboard.scrolled {
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(20px);
@@ -48,7 +48,7 @@ body {
 .dashboard.scrolled .profile-section {
     transform: scale(0.95);
 }
-
+*/
 .profile-image {
     width: 85px;
     height: 85px;
